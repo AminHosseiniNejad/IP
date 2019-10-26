@@ -138,7 +138,101 @@ public class ToDoList {
 					}
 					break;
 
-				
+				case 3:// Edit Task(update,mark as done,remove)
+					System.out.println("Enter 1 to update, 2 to mark as done, and 3 to remove a task:");
+					int editOption = scan.nextInt();
+
+					switch (editOption) {
+					case 1:// update a task
+						System.out.println("Enter 1 to update the task title, 2 to update the task due date, and 3"
+								+ " to update the task status:");
+						int updateOption = scan.nextInt();
+
+						System.out.println("Enter the taskId of the task that you want to update:");
+						for (Task t : tasks.getTasks()) {
+							System.out.print(t.getTaskId() + "\t");
+						}
+						System.out.println("");
+						switch (updateOption) {
+						case 1:// update the task title
+
+							String selectedtaskId = reader.readLine();
+							System.out.println("Enter the new task title:");
+							String aNewTaskTitle = reader.readLine();
+							tasks.editTaskTitle(selectedtaskId, aNewTaskTitle);
+
+							quit = false;
+							break;
+
+						case 2:// update the task due date
+//							System.out.println("Enter the taskId of the task that you want to update:");
+							String selectedtaskId2 = reader.readLine();
+							System.out.println("Enter the new task due date:");
+							String aNewTaskDueDate = reader.readLine();
+							tasks.editTaskDueDate(selectedtaskId2, aNewTaskDueDate);
+							quit = false;
+							break;
+
+						case 3:// update the task status
+//							System.out.println("Enter the taskId of the task that you want to update:");
+							String selectedtaskId3 = reader.readLine();
+							System.out.println("Enter the new task status:");
+							String newTaskStatus = reader.readLine();
+							tasks.editTaskStatus(selectedtaskId3, newTaskStatus);
+
+							quit = false;
+							break;
+						}
+						break;
+
+					case 2:// mark a task as done
+						System.out.println("Enter the taskId of the task that you want to mark as done:");
+						for (Task t : tasks.getTasks()) {
+							System.out.print(t.getTaskId() + "\t");
+						}
+						System.out.println("");
+
+						String markedTaskId = reader.readLine();
+						tasks.markTaskAsDone(markedTaskId);
+						break;
+
+					case 3:// remove a task
+						System.out.println("Enter the taskId of the task that you want to remove:");
+						for (Task t : tasks.getTasks()) {
+							System.out.print(t.getTaskId() + "\t");
+						}
+						System.out.println("");
+
+						String removedTaskId = reader.readLine();
+						tasks.removeTask(removedTaskId);
+
+						// removing projects from the projects list if there is no more tasks in that
+						// project
+//						for(Project aProject: projects.getProjects()) {
+//							boolean emptyProject = aProject.getTasksProject().isEmpty();
+//							if(emptyProject == true) {
+//								projects.removeProject(aProject.getProjectId());
+//							}
+//						}
+						break;
+
+					}
+
+					quit = false;
+					break;
+
+				case 4:// save and quit
+
+					/*
+					 * write the data on the CSV file saved at "src/IP/ToDo.csv" to be able to save
+					 * them while quitting the project
+					 */
+					readWriteCSV.writeCsv("src/IP/ToDo.csv");
+
+					// quit
+					System.exit(0);
+					quit = true;
+					break;
 				}
 
 			}
