@@ -88,6 +88,56 @@ public class ToDoList {
 
 					}
 					break;
+				case 2:// Add New Task
+
+					System.out.println("Enter the task title:");
+					String newTaskTitle = reader.readLine();
+					System.out.println("Enter the task due date:");
+					String newTaskDueDate = reader.readLine();
+
+					Task newTask = new Task(newTaskTitle, newTaskDueDate, "toDo");
+					tasks.addTasks(newTask);
+					System.out.println("Add the new task to (1) an existing project OR (2) a new project:");
+					int taskInProject = scan.nextInt();
+
+					// nested switch
+					switch (taskInProject) {
+					case 1:// adding the task to the existing projects
+
+						System.out.println("Which project(specified by projectId) do you want to add the task to? ");
+						for (Project project : projects.getProjects()) {
+							System.out.print(project.getProjectId() + "\t");
+						}
+
+						System.out.println("");
+						String projectId = reader.readLine();
+
+						for (Project tmpProject : projects.getProjects()) {
+							if (tmpProject.getProjectId().equals(projectId)) {
+								tmpProject.addTaskProject(newTask);
+								newTask.setConstituter(tmpProject);
+							}
+						}
+						quit = false;
+						break;
+
+					case 2:// adding the task to a new project
+						System.out.println("Enter the project title:");
+						String newProjectTitle = reader.readLine();
+						System.out.println("Enter the project due date:");
+						String newProjectDueDate = reader.readLine();
+
+						Project newProject = new Project(newProjectTitle, newProjectDueDate, "toDo");
+						projects.addProjects(newProject);
+
+						newTask.setConstituter(newProject);
+						newProject.addTaskProject(newTask);
+
+						quit = false;
+						break;
+					}
+					break;
+
 				
 				}
 
