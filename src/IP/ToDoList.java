@@ -44,6 +44,53 @@ public class ToDoList {
 
 				int option = scan.nextInt();
 
+//Using Switch method for the user to be able go on with one of the options
+				switch (option) {
+				
+				case 1:// Show Task List (by date or project)
+					System.out.println("Determine if the tasks are to be sorted by (1)date or by (2)project:");
+					int sortedTask = scan.nextInt();
+					// nested switch
+					switch (sortedTask) {
+					case 1:// sorting tasks by their due dates
+						System.out.println("The tasks list sorted by date is as below:");
+						for (int i = 0; i < tasks.sortTasksDueDate().size(); i++) {
+
+							String sortedDate = formatter.format(tasks.sortTasksDueDate().get(i));
+							System.out.println(sortedDate + ":");
+							for (int j = 0; j < tasks.findTaskListByDuedate(sortedDate).size(); j++) {
+								System.out.println(tasks.findTaskListByDuedate(sortedDate).get(j).getTaskId());
+							}
+						}
+						quit = false;
+						break;
+
+					case 2:// sorting tasks by their projects
+						System.out.println("The tasks list sorted by their projects is as below:\n");
+						ArrayList<String> sortedProjectIdList = new ArrayList<String>();
+						for (Project tmpProject: projects.getProjects()) {
+							sortedProjectIdList.add(tmpProject.getProjectId());
+						}
+						
+						Collections.sort(sortedProjectIdList);
+						
+						for (String sortedProjectId: sortedProjectIdList) {
+							System.out.println(sortedProjectId + ":");
+							
+							Project tmpoProject = projects.findProject(sortedProjectId);
+							for (Task aTask: tmpoProject.getTasksProject()) {
+								System.out.println(aTask.getTaskId());
+							}
+
+						}
+						quit = false;
+						break;
+
+					}
+					break;
+				
+				}
+
 			}
 		} finally {
 			scan.close();
